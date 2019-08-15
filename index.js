@@ -31,7 +31,7 @@ async function relativize(filepath) {
     relativize($(this), "href");
   });
 
-  $("img").each(function() {
+  $("script, img").each(function() {
     relativize($(this), "src");
   });
 
