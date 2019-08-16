@@ -23,7 +23,7 @@ async function relativize(filepath) {
     const val = elem.attr(attribute);
     let u = new URL(val, root);
     if (u.host !== new URL(root).host) return;
-    let relative = path.relative(path.dirname(url), u.pathname);
+    let relative = path.relative(path.dirname(url), u.pathname) + `${u.hash}`;
     elem.attr(attribute, relative || "./");
   }
 
