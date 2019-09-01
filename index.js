@@ -24,15 +24,22 @@ async function relativize(filepath) {
     let u = new URL(val, root);
     if (u.host !== new URL(root).host) return;
     let relative = path.relative(path.dirname(url), u.pathname) + `${u.hash}`;
+    if (relative.includes("..#")) {
+      relative = u.hash;
+    }
     elem.attr(attribute, relative || "./");
   }
 
   $("a, link").each(function() {
-    relativize($(this), "href");
+    if ($(this).attr('href')) {
+      relativize($(this), "href");
+    }
   });
 
   $("script, img").each(function() {
-    relativize($(this), "src");
+    if ($(this).attr('src')) {
+      relativize($(this), "src");
+     }
   });
 
   $("meta[property='og:image'],meta[name='thumbnail']").each(function() {
