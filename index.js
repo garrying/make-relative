@@ -22,10 +22,14 @@ async function relativize(filepath) {
   function relativize(elem, attribute) {
     const val = elem.attr(attribute);
     let u = new URL(val, root);
+    var lastChar = val.substr(-1);
     if (u.host !== new URL(root).host) return;
     let relative = path.relative(path.dirname(url), u.pathname) + `${u.hash}`;
     if (relative.includes("..#")) {
       relative = u.hash;
+    }
+    if (lastChar === '/') {
+      relative = relative + '/';
     }
     elem.attr(attribute, relative || "./");
   }
