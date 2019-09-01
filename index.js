@@ -28,8 +28,14 @@ async function relativize(filepath) {
     if (relative.includes("..#")) {
       relative = u.hash;
     }
+    if (relative.includes('../') && relative.includes('#') || filepath === 'index.html') {
+      relative = relative.replace('#', '/#');
+    }
     if (lastChar === '/') {
       relative = relative + '/';
+    }
+    if (u.pathname === val && relative === '/') {
+      relative = './';
     }
     elem.attr(attribute, relative || "./");
   }
